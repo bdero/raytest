@@ -19,12 +19,14 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 if(PLATFORM STREQUAL "Web")
   set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS
-          "-s USE_GLFW=3 -s ASYNCIFY -s WASM=1 -s ASSERTIONS=1 -s DEMANGLE_SUPPORT=1 \
-          --shell-file ${CMAKE_CURRENT_SOURCE_DIR}/emscripten_shell.html")
+          "-s USE_GLFW=3 -s ASYNCIFY -s WASM=1 -s ASSERTIONS=1 -s DEMANGLE_SUPPORT=1 --bind \
+          --shell-file ${CMAKE_CURRENT_SOURCE_DIR}/emscripten_shell.html \
+          --preload-file ${CMAKE_CURRENT_SOURCE_DIR}/assets")
 endif()
 
 # Setup raylib
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(STATIC ON CACHE BOOL "" FORCE)
 add_subdirectory(deps/raylib)
 target_link_libraries(${PROJECT_NAME}
-        PRIVATE raylib)
+        PRIVATE raylib_static)
