@@ -1,21 +1,29 @@
-#include <iostream>
 #include "raylib.h"
 
 int main() {
-    std::cout << "test output" << std::endl;
-
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(800, 600, "Test window");
+
+    Camera camera = {
+            {5, 5, 5}, {0, 0, 0}, {0, 1, 0},
+            45, CAMERA_PERSPECTIVE};
+    Model model = LoadModelFromMesh(GenMeshCube(1, 1, 1));
 
     while (!WindowShouldClose()) {
         BeginDrawing();
 
-        ClearBackground(Color {.r = 100, .g = 100, .b = 100});
+        ClearBackground(WHITE);
+
+        BeginMode3D(camera);
+        DrawModel(model, {0, 0, 0}, 1, RED);
+        EndMode3D();
+
         DrawText("Test text", 100, 100, 20, LIGHTGRAY);
 
         EndDrawing();
     }
 
+    UnloadModel(model);
     CloseWindow();
-
     return 0;
 }
