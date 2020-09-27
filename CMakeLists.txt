@@ -10,7 +10,7 @@ if(PLATFORM STREQUAL "Web")
   set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/cmake-build-emscripten)
   set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/cmake-build-emscripten)
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/output-web)
-  SET(CMAKE_EXECUTABLE_SUFFIX ".html")
+  set(CMAKE_EXECUTABLE_SUFFIX ".html")
 endif()
 
 # Add sources
@@ -28,5 +28,14 @@ endif()
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(STATIC ON CACHE BOOL "" FORCE)
 add_subdirectory(deps/raylib)
-target_link_libraries(${PROJECT_NAME}
-        PRIVATE raylib_static)
+
+# Setup lua
+set(LUA_SOURCE_DIR deps/lua)
+file(GLOB LUA_SOURCE_FILES "${LUA_SOURCE_DIR}/l*.c")
+add_library(lua STATIC ${LUA_SOURCE_FILES})
+
+target_include_directories(${PROJECT_NAME} PRIVATE
+        deps/lua
+        deps/sol2/single/include)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+        raylib_static lua)
