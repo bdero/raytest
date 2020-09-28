@@ -34,6 +34,9 @@ set(LUA_SOURCE_DIR deps/lua)
 file(GLOB LUA_SOURCE_FILES "${LUA_SOURCE_DIR}/l*.c")
 add_library(lua STATIC ${LUA_SOURCE_FILES})
 
+# Copy assets
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets DESTINATION ${CMAKE_BINARY_DIR})
+
 target_include_directories(${PROJECT_NAME} PRIVATE
         deps/lua
         deps/sol2/single/include
