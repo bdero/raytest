@@ -1,14 +1,38 @@
+#include <fstream>
+
 extern "C" {
-    #include <lua.h>
+    #include "lua.h"
 }
 #include "sol/sol.hpp"
 #include "raylib.h"
+#include "cereal/cereal.hpp"
+#include "cereal/archives/json.hpp"
+
+struct CerealTest {
+    float value;
+    std::string message;
+
+    template <class Archive>
+    void serialize(Archive& archive) {
+        archive(value, message);
+    }
+
+    void save(std::ofstream& outputStream) {
+        cereal::JSONOutputArchive archive(outputStream);
+        archive(*this);
+    }
+};
 
 struct LuaThing {
     float something = 0;
 };
 
 void luaTest() {
+    CerealTest cereal {1313.666, "Satanic ritual"};
+
+    std::ofstream outputStream("test.cerealtest", std::ios::binary);
+    cereal.save(outputStream);
+
     sol::state lua;
     lua.open_libraries(sol::lib::base);
 

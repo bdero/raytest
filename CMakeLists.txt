@@ -36,6 +36,7 @@ add_library(lua STATIC ${LUA_SOURCE_FILES})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
         deps/lua
-        deps/sol2/single/include)
+        deps/sol2/single/include
+        deps/cereal/include)
 target_link_libraries(${PROJECT_NAME} PRIVATE
         raylib_static lua)

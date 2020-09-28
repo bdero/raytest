@@ -10,3 +10,6 @@
 [submodule "deps/lua"]
 	path = deps/lua
 	url = https://github.com/lua/lua.git
+[submodule "deps/cereal"]
+	path = deps/cereal
+	url = https://github.com/USCiLab/cereal.git
