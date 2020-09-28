@@ -2,17 +2,17 @@
 
 Entity::Entity() {
     lua.open_libraries(sol::lib::base);
-    onFrame = lua.load(R"(
-        local dt = ...
-        print('dt = ' + dt)
+    lua.script(R"(
+    function onFrame(dt)
+        print("Hello! " .. dt)
+    end
     )");
 }
 
-Entity::Entity(const string &_type, float x, float y) {
+Entity::Entity(const string &_type, float x, float y) : Entity() {
     type = _type;
     pos.x = x;
     pos.y = y;
-    Entity();
 }
 
 Entity::~Entity() {
@@ -20,7 +20,7 @@ Entity::~Entity() {
 }
 
 void Entity::Update(float dt) {
-    onFrame(dt);
+    lua["onFrame"](dt);
 }
 
 void Entity::Render() {

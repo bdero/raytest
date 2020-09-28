@@ -18,7 +18,6 @@ public:
     
     // Behavior / AI
     sol::state lua;
-    sol::load_result onFrame;
     
     // Sprite
     Texture2D texture;
