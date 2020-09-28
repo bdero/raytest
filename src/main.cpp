@@ -23,16 +23,18 @@ struct CerealTest {
     }
 };
 
+void cerealTest() {
+    CerealTest cereal {1313.666, "Satanic ritual"};
+
+    std::ofstream outputStream("test.cerealtest", std::ios::binary);
+    cereal.save(outputStream);
+}
+
 struct LuaThing {
     float something = 0;
 };
 
 void luaTest() {
-    CerealTest cereal {1313.666, "Satanic ritual"};
-
-    std::ofstream outputStream("test.cerealtest", std::ios::binary);
-    cereal.save(outputStream);
-
     sol::state lua;
     lua.open_libraries(sol::lib::base);
 
@@ -55,6 +57,7 @@ void luaTest() {
 }
 
 int main() {
+    cerealTest();
     luaTest();
 
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
