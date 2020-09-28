@@ -8,6 +8,8 @@ extern "C" {
 #include "cereal/cereal.hpp"
 #include "cereal/archives/json.hpp"
 
+#include "Entity.hpp"
+
 struct CerealTest {
     float value;
     std::string message;
@@ -56,9 +58,15 @@ void luaTest() {
     printf("Important values from LUA: %.2f\n", thing.something);
 }
 
+void entityTest() {
+    Entity e("Blah", 10, 20);
+    e.Update(1.0f);
+}
+
 int main() {
     cerealTest();
     luaTest();
+    entityTest();
 
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(800, 600, "Test window");
